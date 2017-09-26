@@ -1,3 +1,3 @@
 # mitosis-workman
 
-Workman layout for the Mitosis keyboard
+Workman QMK keymap for the Mitosis keyboard.
