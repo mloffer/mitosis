@@ -22,6 +22,10 @@ enum mitosis_keycodes
   SHIFT
 };
 
+enum {
+  TD_SHIFT_CAPS = 0
+};
+
 #define LAYER_TOGGLE_DELAY 300
 
 // Fillers to make layering more clear
@@ -33,8 +37,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   { KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,           KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN },
   { KC_A,    KC_S,    KC_H,    KC_T,    KC_G,           KC_Y,    KC_N,    KC_E,    KC_O,    KC_I    },
   { KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,           KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH },
-  { XXXXXXX, KC_HOME, XXXXXXX, KC_TAB,  KC_LCTL,        KC_LALT, KC_ESC,  KC_DEL,  KC_PGUP, XXXXXXX },
-  { XXXXXXX, KC_END,  KC_LGUI, KC_ENT,  FNKEY,          SHIFT,   KC_SPC,  KC_BSPC, KC_PGDN, XXXXXXX }
+  { XXXXXXX, KC_HOME, KC_LGUI, KC_TAB,  XXXXXXX,        KC_ESC, KC_BSPC,  KC_DEL,  KC_PGUP, XXXXXXX },
+  { XXXXXXX, KC_END,  KC_LCTL, KC_ENT,  FNKEY,          SHIFT,   KC_SPC,  KC_LALT, KC_PGDN, XXXXXXX }
 },
 
 
@@ -77,7 +81,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 }
 
 };
-
 
 const uint16_t PROGMEM fn_actions[] = {
 
@@ -177,3 +180,10 @@ void matrix_scan_user(void) {
     //  set_led_white;
 };
 
+// Currently not working
+//Tap Dance Definitions
+// qk_tap_dance_action_t tap_dance_actions[] = {
+//   //Tap once for shift, twice for Caps Lock
+//   [TD_SHIFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(SHIFT, KC_CAPS)
+// // Other declarations would go here, separated by commas, if you have them
+// };
