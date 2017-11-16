@@ -12,7 +12,8 @@ enum mitosis_layers
 	_WORKMAN,
 	_SHIFTED,
 	_FUNCTION,
-	_FUNCSHIFT
+  _FUNCSHIFT,
+  _MOUSE
 };
 
 enum mitosis_keycodes 
@@ -28,43 +29,51 @@ enum mitosis_keycodes
 #define XXXXXXX KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[_WORKMAN] = { /* Malt Layout, customised for reduced columns (ex: quote and shift locations) */
-  {KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,           KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN },
-  {KC_A,    KC_S,    KC_H,    KC_T,    KC_G,           KC_Y,    KC_N,    KC_E,    KC_O,    KC_I    },
-  {KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,           KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH },
-  {XXXXXXX, KC_HOME, KC_ESC,  KC_TAB,  KC_LCTL,        KC_LALT, KC_GRV,  KC_DEL,  KC_PGUP, XXXXXXX },
-  {XXXXXXX, KC_END,  KC_LGUI, KC_ENT,  FNKEY,          SHIFT,   KC_SPC,  KC_BSPC, KC_PGDN, XXXXXXX }
+[_WORKMAN] = { /* Workman layout */
+  { KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,           KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN },
+  { KC_A,    KC_S,    KC_H,    KC_T,    KC_G,           KC_Y,    KC_N,    KC_E,    KC_O,    KC_I    },
+  { KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,           KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH },
+  { XXXXXXX, KC_HOME, XXXXXXX, KC_TAB,  KC_LCTL,        KC_LALT, KC_ESC,  KC_DEL,  KC_PGUP, XXXXXXX },
+  { XXXXXXX, KC_END,  KC_LGUI, KC_ENT,  FNKEY,          SHIFT,   KC_SPC,  KC_BSPC, KC_PGDN, XXXXXXX }
 },
 
 
 [_SHIFTED] = { /* Shifted Layer, layered so that tri_layer can be used, or selectively
                                  able to modify individual key's shifted behaviour */
-  {_______, _______, _______, _______, _______,       _______, _______, _______, _______, _______ },
-  {_______, _______, _______, _______, _______,       _______, _______, _______, _______, _______ },
-  {_______, _______, _______, _______, _______,       _______, _______, _______, _______, _______ },
-  {XXXXXXX, KC_MPRV, KC_MSTP, _______, _______,       _______, _______, _______, _______, XXXXXXX },
-  {XXXXXXX, KC_MNXT, _______, KC_MPLY, _______,       _______, _______, _______, _______, XXXXXXX }
+  { _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______ },
+  { _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______ },
+  { _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______ },
+  { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX },
+  { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX }
 },
 
 
 
 [_FUNCTION] = { /* Function Layer, primary alternative layer featuring numpad on right hand,
                                    cursor keys on left hand, and all symbols*/
-  {_______, KC_AMPR, KC_ASTR, _______, KC_VOLU,       KC_MINS, KC_7,    KC_8,    KC_9,    KC_LCBR },
-  {KC_QUOT, KC_DLR,  KC_PERC, KC_CIRC, KC_MUTE,       KC_LBRC, KC_4,    KC_5,    KC_6,    KC_LPRN },
-  {_______, KC_EXLM, KC_AT,   KC_HASH, KC_VOLD,       KC_EQL,  KC_1,    KC_2,    KC_3,    KC_BSLS },
-  {XXXXXXX, _______, _______, _______, _______,       _______, KC_TILDE,KC_INS,  KC_CAPS, XXXXXXX },
-  {XXXXXXX, _______, _______, _______, _______,       _______, KC_0,    KC_MENU, KC_PSCR, XXXXXXX }
+  { KC_GRV,  KC_AMPR, KC_ASTR, _______, KC_VOLU,        KC_MINS, KC_7,    KC_8,    KC_9,    KC_LCBR },
+  { KC_QUOT, KC_DLR,  KC_PERC, KC_CIRC, KC_MUTE,        KC_LBRC, KC_4,    KC_5,    KC_6,    KC_LPRN },
+  { _______, KC_EXLM, KC_AT,   KC_HASH, KC_VOLD,        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_BSLS },
+  { XXXXXXX, _______, _______, _______, _______,        _______, _______, KC_INS,  KC_CAPS, XXXXXXX },
+  { XXXXXXX, _______, _______, _______, _______,        _______, KC_0,    KC_MENU, KC_PSCR, XXXXXXX }
 },
 
 
 [_FUNCSHIFT] = { /* Function Shifted Layer, secondary alternative layer with closing brackets,
                                             and F-keys under their numpad equivalents*/
-  {_______, _______, KC_UP,   _______, KC_F10,        _______, KC_F7,   KC_F8,   KC_F9,   KC_RCBR },
-  {_______, KC_LEFT, KC_DOWN, KC_RGHT, KC_F11,        KC_RBRC, KC_F4,   KC_F5,   KC_F6,   KC_RPRN },
-  {_______, _______, _______, _______, KC_F12,        _______, KC_F1,   KC_F2,   KC_F3,   _______ },
-  {XXXXXXX, _______, _______, _______, _______,       _______, _______, _______, _______, XXXXXXX },
-  {XXXXXXX, _______, _______, _______, _______,       _______, _______, _______, _______, XXXXXXX }
+  { KC_TILDE, _______, KC_UP,  _______, KC_F10,         _______, KC_F7,   KC_F8,   KC_F9,   KC_RCBR },
+  { _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_F11,         KC_RBRC, KC_F4,   KC_F5,   KC_F6,   KC_RPRN },
+  { _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_F12,         _______, KC_F1,   KC_F2,   KC_F3,   _______ },
+  { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX },
+  { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX }
+},
+
+[_MOUSE] = { /* Mouse layer */
+  { XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, KC_WH_U, XXXXXXX, XXXXXXX },
+  { XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,        XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, XXXXXXX },
+  { XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, KC_WH_D, XXXXXXX, XXXXXXX },
+  { XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX },
+  { XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX }
 }
 
 };
@@ -156,7 +165,9 @@ void matrix_scan_user(void) {
         break;
       case _FUNCSHIFT:
       	set_led_magenta;
-      	break;
+        break;
+      case _MOUSE:
+        set_led_green;
       default:
         break;
     }
