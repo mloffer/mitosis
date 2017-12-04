@@ -87,7 +87,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case FUNC:
             if (record->event.pressed) { // key pressed
-                if(timer_elapsed(fn_key_timer) < TAPPING_TERM)
+                if(timer_elapsed(fn_key_timer) <= TAPPING_TERM)
                     fn_key_latch = true; // latch key if fn was pressed previously within TAPPING_TERM
                 fn_key_timer = timer_read();
                 layer_on(_FUNCTION);
@@ -101,7 +101,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case SHIFT:
             if (record->event.pressed) {
-                if(timer_elapsed(sh_key_timer) < TAPPING_TERM)
+                if(timer_elapsed(sh_key_timer) <= TAPPING_TERM)
                     sh_key_latch = true;
                 sh_key_timer = timer_read();
                 layer_on(_SHIFTED);
