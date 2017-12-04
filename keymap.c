@@ -85,6 +85,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     layer = biton32(layer_state);  // get the current layer
 
     switch(keycode) {
+
         case FUNC:
             if (record->event.pressed) { // key pressed
                 if(timer_elapsed(fn_key_timer) <= TAPPING_TERM)
@@ -98,7 +99,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
             return false;
-            break;
+
         case SHIFT:
             if (record->event.pressed) {
                 if(timer_elapsed(sh_key_timer) <= TAPPING_TERM)
@@ -115,17 +116,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
             return false;
-            break;
     }
 
     //FUNCSHIFT has been shifted by the SHIFT handling, some keys need to be excluded
     if (layer == _FUNCSHIFT) {
         //F1-F12 should be sent as unshifted keycodes, 
         //and ] needs to be unshifted or it is sent as }
-        //arrow keys as well
+        //arrow keys as well (right, down, left, up) http://www.freebsddiary.org/APC/usb_hid_usages.php
         if ( (keycode >= KC_F1 && keycode <= KC_F12)
             || keycode == KC_RBRC
-            || keycode == KC_UP || keycode == KC_DOWN || keycode == KC_LEFT || keycode == KC_RGHT ) {
+            || (keycode >= KC_RGHT && keycode <= KC_UP) ) {
                 if (record->event.pressed) {
                     unregister_mods(MOD_LSFT);
                 } else {
