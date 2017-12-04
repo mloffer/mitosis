@@ -15,10 +15,12 @@ enum mitosis_layers {
     _MOUSE
 };
 
-enum {
-    FN = 0,
-    SH
+enum mitosis_keycodes {
+    FUNC = SAFE_RANGE,
+    SHIFT
 };
+
+#define TAPPING_TERM 300
 
 // Fillers to make layering more clear
 #define _______ KC_TRNS
@@ -30,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 { KC_A,    KC_S,    KC_H,    KC_T,    KC_G,           KC_Y,    KC_N,    KC_E,    KC_O,    KC_I    },
 { KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,           KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH },
 { XXXXXXX, KC_HOME, KC_LGUI, KC_TAB,  KC_CAPS,        KC_ESC,  KC_BSPC, KC_DEL,  KC_PGUP, XXXXXXX },
-{ XXXXXXX, KC_END,  KC_LCTL, KC_ENT,  TD(FN),         TD(SH),  KC_SPC,  KC_LALT, KC_PGDN, XXXXXXX }
+{ XXXXXXX, KC_END,  KC_LCTL, KC_ENT,  FUNC,           SHIFT,   KC_SPC,  KC_LALT, KC_PGDN, XXXXXXX }
 },
 
 [_SHIFTED] = { /* Shifted Layer, layered so that tri_layer can be used, or selectively
@@ -46,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 { KC_GRV,  KC_AMPR, KC_ASTR, _______, KC_VOLU,        KC_MINS, KC_7,    KC_8,    KC_9,    KC_LCBR },
 { KC_QUOT, KC_DLR,  KC_PERC, KC_CIRC, KC_MUTE,        KC_LBRC, KC_4,    KC_5,    KC_6,    KC_LPRN },
 { _______, KC_EXLM, KC_AT,   KC_HASH, KC_VOLD,        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_BSLS },
-{ XXXXXXX, _______, _______, _______, _______,        _______, _______, KC_INS,  KC_CAPS, XXXXXXX },
+{ XXXXXXX, _______, _______, _______, _______,        _______, _______, KC_INS,  _______, XXXXXXX },
 { XXXXXXX, _______, _______, _______, _______,        _______, KC_0,    KC_MENU, KC_PSCR, XXXXXXX }
 },
 
@@ -72,10 +74,49 @@ const uint16_t PROGMEM fn_actions[] = {
 
 };
 
+static uint16_t fn_key_timer;
+static uint16_t sh_key_timer;
+bool fn_key_latch = false;
+bool sh_key_latch = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 	uint8_t layer;
     layer = biton32(layer_state);  // get the current layer
+
+    switch(keycode) {
+        case FUNC:
+            if (record->event.pressed) { // key pressed
+                if(timer_elapsed(fn_key_timer) < TAPPING_TERM)
+                    fn_key_latch = true; // latch key if fn was pressed previously within TAPPING_TERM
+                fn_key_timer = timer_read();
+                layer_on(_FUNCTION);
+            } else { // key released
+                if (!fn_key_latch) // if key is latched, multi-tap was performed
+                    layer_off(_FUNCTION);
+                fn_key_latch = false; // always release latch on key release
+            }
+            update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
+            return false;
+            break;
+        case SHIFT:
+            if (record->event.pressed) {
+                if(timer_elapsed(sh_key_timer) < TAPPING_TERM)
+                    sh_key_latch = true;
+                sh_key_timer = timer_read();
+                layer_on(_SHIFTED);
+                register_code(KC_LSFT);
+            } else {
+                if (!sh_key_latch) {
+                    layer_off(_SHIFTED);
+                    unregister_code(KC_LSFT);
+                }
+                sh_key_latch = false;
+            }
+            update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
+            return false;
+            break;
+    }
 
     //FUNCSHIFT has been shifted by the SHIFT handling, some keys need to be excluded
     if (layer == _FUNCSHIFT) {
@@ -117,74 +158,4 @@ void matrix_scan_user(void) {
         default:
             break;
   }
-
-    // TODO determine way to show caps lock reliably
-    //if(host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK))
-    //  set_led_white;
-};
-
-bool is_fn_held;
-
-void fn_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if(state->pressed) {
-        layer_on(_FUNCTION);
-        is_fn_held = true;
-    }
-    if(state->count == 1 && !state->pressed) {
-        layer_off(_FUNCTION);
-        is_fn_held = false;
-    }
-    if(state->count == 2) {
-        layer_on(_FUNCTION);
-    }
-
-    update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
-}
-
-void fn_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if(is_fn_held) {
-        layer_off(_FUNCTION);
-        is_fn_held = false;
-    }
-
-    update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
-}
-
-
-
-bool is_shift_held;
-
-void shift_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if(state->pressed) {
-        layer_on(_SHIFTED);
-        register_code(KC_LSFT);
-        is_shift_held = true;
-    }
-    if(state->count == 1 && !state->pressed) {
-        layer_off(_SHIFTED);
-        unregister_code(KC_LSFT);
-        is_shift_held = false;
-    }
-    if(state->count == 2) {
-        register_code(KC_LSFT);
-        layer_on(_SHIFTED);
-    }
-
-    update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
-}
-
-void shift_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if(is_shift_held) {
-        layer_off(_SHIFTED);
-        unregister_code(KC_LSFT);
-        is_shift_held = false;
-    }
-
-    update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
-}
-
-// Tap Dance Definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [FN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_dance_finished, fn_dance_reset),
-    [SH] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, shift_dance_finished, shift_dance_reset)
 };
