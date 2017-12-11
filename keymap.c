@@ -48,8 +48,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 { KC_GRV,  KC_AMPR, KC_ASTR, _______, KC_VOLU,        KC_MINS, KC_7,    KC_8,    KC_9,    KC_LCBR },
 { KC_QUOT, KC_DLR,  KC_PERC, KC_CIRC, KC_MUTE,        KC_LBRC, KC_4,    KC_5,    KC_6,    KC_LPRN },
 { _______, KC_EXLM, KC_AT,   KC_HASH, KC_VOLD,        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_BSLS },
-{ XXXXXXX, _______, _______, _______, _______,        _______, _______, KC_INS,  _______, XXXXXXX },
-{ XXXXXXX, _______, _______, _______, _______,        _______, KC_0,    KC_MENU, KC_PSCR, XXXXXXX }
+{ XXXXXXX, _______, _______, _______, _______,        _______, KC_APP,  KC_INS,  _______, XXXXXXX },
+{ XXXXXXX, _______, _______, _______, _______,        _______, KC_0,    _______, KC_PSCR, XXXXXXX }
 },
 
 [_FUNCSHIFT] = { /* Function Shifted Layer */
