@@ -10,7 +10,7 @@
 enum mitosis_layers {
 	_WORKMAN,
 	_SHIFTED,
-	_FUNCTION,
+	_FUN,
     _FUNCSHIFT,
     _MOUSE
 };
@@ -20,19 +20,13 @@ enum mitosis_keycodes {
     SHIFT
 };
 
-#define TAPPING_TERM 300
-
-// Fillers to make layering more clear
-#define _______ KC_TRNS
-#define XXXXXXX KC_NO
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_WORKMAN] = { /* Workman layout */
-{ KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,           KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN },
-{ KC_A,    KC_S,    KC_H,    KC_T,    KC_G,           KC_Y,    KC_N,    KC_E,    KC_O,    KC_I    },
-{ KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,           KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH },
-{ XXXXXXX, KC_HOME, KC_LGUI, KC_TAB,  KC_CAPS,        KC_ESC,  KC_BSPC, KC_DEL,  KC_PGUP, XXXXXXX },
-{ XXXXXXX, KC_END,  KC_LCTL, KC_ENT,  FUNC,           SHIFT,   KC_SPC,  KC_LALT, KC_PGDN, XXXXXXX }
+{ KC_Q,    KC_D,    KC_R,    KC_W,     KC_B,                              KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN },
+{ LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_H), LSFT_T(KC_T), KC_G,           KC_Y,    RSFT_T(KC_N), RCTL_T(KC_E), RALT_T(KC_O), RGUI_T(KC_I)    },
+{ KC_Z,    KC_X,    KC_M,    KC_C,     KC_V,                              KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH },
+{ XXXXXXX, KC_HOME, KC_LCTL, KC_TAB,   KC_CAPS,                           KC_ESC,  KC_LALT, KC_DEL,  KC_PGUP, XXXXXXX },
+{ XXXXXXX, KC_END,  KC_LGUI, TT(_FUN), KC_ENT,                            KC_SPC,  SHIFT,   KC_BSPC, KC_PGDN, XXXXXXX }
 },
 
 [_SHIFTED] = { /* Shifted Layer, layered so that tri_layer can be used, or selectively
@@ -44,12 +38,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX }
 },
 
-[_FUNCTION] = { /* Function Layer */
+[_FUN] = { /* Function Layer */
 { KC_GRV,  KC_AMPR, KC_ASTR, _______, KC_VOLU,        KC_MINS, KC_7,    KC_8,    KC_9,    KC_LCBR },
 { KC_QUOT, KC_DLR,  KC_PERC, KC_CIRC, KC_MUTE,        KC_LBRC, KC_4,    KC_5,    KC_6,    KC_LPRN },
 { _______, KC_EXLM, KC_AT,   KC_HASH, KC_VOLD,        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_BSLS },
 { XXXXXXX, _______, _______, _______, _______,        KC_APP,  _______, KC_INS,  _______, XXXXXXX },
-{ XXXXXXX, _______, _______, _______, _______,        _______, KC_0,    _______, KC_PSCR, XXXXXXX }
+{ XXXXXXX, _______, _______, _______, _______,        KC_0,    _______, _______, KC_PSCR, XXXXXXX }
 },
 
 [_FUNCSHIFT] = { /* Function Shifted Layer */
@@ -91,13 +85,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if(timer_elapsed(fn_key_timer) <= TAPPING_TERM)
                     fn_key_latch = true; // latch key if fn was pressed previously within TAPPING_TERM
                 fn_key_timer = timer_read();
-                layer_on(_FUNCTION);
+                layer_on(_FUN);
             } else { // key released
                 if (!fn_key_latch) // if key is latched, multi-tap was performed
-                    layer_off(_FUNCTION);
+                    layer_off(_FUN);
                 fn_key_latch = false; // always release latch on key release
             }
-            update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
+            update_tri_layer(_FUN, _SHIFTED, _FUNCSHIFT);
             return false;
 
         case SHIFT:
@@ -114,13 +108,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 sh_key_latch = false;
             }
-            update_tri_layer(_FUNCTION, _SHIFTED, _FUNCSHIFT);
+            update_tri_layer(_FUN, _SHIFTED, _FUNCSHIFT);
             return false;
     }
 
     //FUNCSHIFT has been shifted by the SHIFT handling, some keys need to be excluded
     if (layer == _FUNCSHIFT) {
-        //F1-F12 should be sent as unshifted keycodes, 
+        //F1-F12 should be sent as unshifted keycodes,
         //and ] needs to be unshifted or it is sent as }
         //arrow keys as well (right, down, left, up) http://www.freebsddiary.org/APC/usb_hid_usages.php
         if ( (keycode >= KC_F1 && keycode <= KC_F12)
@@ -144,7 +138,7 @@ void matrix_scan_user(void) {
         case _WORKMAN:
             set_led_off;
             break;
-        case _FUNCTION:
+        case _FUN:
             set_led_red;
             break;
         case _SHIFTED:
