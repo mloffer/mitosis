@@ -1,7 +1,7 @@
-#ifndef CONFIG_USER_H
-#define CONFIG_USER_H
-
-#include "../../config.h"
+//#ifndef CONFIG_USER_H
+//#define CONFIG_USER_H
+//#endif
+//#include "../../config.h"
 
 #define TAPPING_TERM 200
 // layer toggle
@@ -10,4 +10,3 @@
 // sane homerow mods
 #define IGNORE_MOD_TAP_INTERRUPT
 
-#endif
