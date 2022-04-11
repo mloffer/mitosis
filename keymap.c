@@ -24,9 +24,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 },
 
 [_SYM] = {
-{ KC_TILD, KC_HASH, KC_ASTR, KC_LBRC, KC_RBRC,                                      KC_BSLS, KC_EXLM, KC_GRV,  KC_DQT,  _______ },
-{ LGUI_T(KC_DLR), LALT_T(KC_PIPE), LCTL_T(KC_EQL), LSFT_T(KC_LPRN), KC_RPRN,        KC_DOT,  RSFT_T(KC_COLN), RCTL_T(KC_MINS), RALT_T(KC_UNDS), RGUI_T(KC_PLUS) },
-{ KC_CIRC, KC_PERC, KC_AT,   KC_LCBR, KC_RCBR,                                      KC_AMPR, KC_SCLN, KC_LT,   KC_GT,   KC_QUES },
+{ KC_TILD, KC_HASH, KC_ASTR, KC_LBRC, KC_RBRC,        KC_BSLS, KC_EXLM, KC_GRV,  KC_DQT,  _______ },
+{ KC_DLR,  KC_PIPE, KC_EQL,  KC_LPRN, KC_RPRN,        KC_DOT,  KC_COLN, KC_MINS, KC_UNDS, KC_PLUS },
+{ KC_CIRC, KC_PERC, KC_AT,   KC_LCBR, KC_RCBR,        KC_AMPR, KC_SCLN, KC_LT,   KC_GT,   KC_QUES },
 { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX },
 { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX }
 },
