@@ -16,33 +16,33 @@ enum mitosis_layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_WORKMAN] = { /* Workman layout */
-{ KC_Q,    KC_D,    KC_R,    KC_W,     KC_B,                              KC_J,    KC_F,    KC_U,    KC_P,    KC_QUOT },
-{ LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_H), LSFT_T(KC_T), KC_G,           KC_Y,    RSFT_T(KC_N), RCTL_T(KC_E), RALT_T(KC_O), RGUI_T(KC_I) },
-{ KC_Z,    KC_X,    KC_M,    KC_C,     KC_V,                              KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH },
-{ XXXXXXX, KC_HOME, KC_LCTL, KC_TAB,   KC_CAPS,                           KC_ESC,  KC_LALT, KC_DEL,  KC_PGUP, XXXXXXX },
-{ XXXXXXX, KC_END,  TT(_NUM), TT(_SYM), KC_ENT,                           KC_SPC,  TT(_FUN),KC_BSPC, KC_PGDN, XXXXXXX }
+{ KC_Q,    KC_D,    KC_R,    KC_W,     KC_B,                           KC_J,    KC_F,     KC_U,    KC_P,    KC_QUOT },
+{ LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_H), LSFT_T(KC_T), KC_G,        KC_Y,    RSFT_T(KC_N), RCTL_T(KC_E), RALT_T(KC_O), RGUI_T(KC_I) },
+{ KC_Z,    KC_X,    KC_M,    KC_C,     KC_V,                           KC_K,    KC_L,     KC_COMM, KC_DOT,  KC_SLSH },
+{ XXXXXXX, XXXXXXX, KC_CAPS, KC_ESC,   KC_TAB,                         KC_TAB,  KC_APP,   KC_DEL,  XXXXXXX, XXXXXXX },
+{ XXXXXXX, XXXXXXX, TT(_NUM), TT(_SYM), KC_ENT,                        KC_SPC,  TT(_FUN), KC_BSPC, XXXXXXX, XXXXXXX }
 },
 
 [_SYM] = {
-{ KC_TILD, KC_HASH, KC_ASTR, KC_LBRC, KC_RBRC,        KC_BSLS, KC_EXLM, KC_GRV,  KC_DQT,  _______ },
-{ KC_DLR,  KC_PIPE, KC_EQL,  KC_LPRN, KC_RPRN,        KC_DOT, KC_COLN, KC_MINS,  KC_UNDS, KC_PLUS },
-{ KC_CIRC, KC_PERC, KC_AT,   KC_LCBR, KC_RCBR,        KC_AMPR, KC_SCLN, KC_LT,   KC_GT,   KC_QUES },
+{ KC_TILD, KC_HASH, KC_ASTR, KC_LBRC, KC_RBRC,                                      KC_BSLS, KC_EXLM, KC_GRV,  KC_DQT,  _______ },
+{ LGUI_T(KC_DLR), LALT_T(KC_PIPE), LCTL_T(KC_EQL), LSFT_T(KC_LPRN), KC_RPRN,        KC_DOT,  RSFT_T(KC_COLN), RCTL_T(KC_MINS), RALT_T(KC_UNDS), RGUI_T(KC_PLUS) },
+{ KC_CIRC, KC_PERC, KC_AT,   KC_LCBR, KC_RCBR,                                      KC_AMPR, KC_SCLN, KC_LT,   KC_GT,   KC_QUES },
 { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX },
 { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX }
 },
 
 [_NUM] = {
 { XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        KC_EQL,  KC_7,    KC_8,    KC_9,    KC_MINS },
-{ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_MUTE,        KC_DOT,  KC_4,    KC_5,    KC_6,    KC_PLUS },
-{ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        KC_ASTR, KC_1,    KC_2,    KC_3,    KC_SLSH },
-{ XXXXXXX, _______, _______, _______, _______,        KC_APP,  _______, KC_INS,  _______, XXXXXXX },
-{ XXXXXXX, _______, _______, _______, _______,        KC_0,    _______, _______, KC_PSCR, XXXXXXX }
+{ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_DLR,         KC_DOT,  KC_4,    KC_5,    KC_6,    KC_PLUS },
+{ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PERC,        KC_ASTR, KC_1,    KC_2,    KC_3,    KC_SLSH },
+{ XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX },
+{ XXXXXXX, _______, _______, _______, _______,        KC_0,    _______, _______, _______, XXXXXXX }
 },
 
 [_FUN] = {
-{ KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_MNXT,        KC_VOLU, KC_PGUP, KC_UP,   KC_PGDN, _______ },
-{ KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_MPLY,        KC_MUTE, KC_LEFT, KC_DOWN, KC_RGHT, _______ },
-{ KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_MPRV,        KC_VOLD, KC_HOME, XXXXXXX, KC_END,  _______ },
+{ KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_MNXT,        KC_VOLU, KC_PGUP, KC_UP,   KC_PGDN, XXXXXXX },
+{ KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_MPLY,        KC_MUTE, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX },
+{ KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_MPRV,        KC_VOLD, KC_HOME, XXXXXXX, KC_END,  XXXXXXX },
 { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX },
 { XXXXXXX, _______, _______, _______, _______,        _______, _______, _______, _______, XXXXXXX }
 }
@@ -51,9 +51,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void keyboard_post_init_user(void) {
     // Customise these values to desired behaviour
-    debug_enable=true;
-    debug_matrix=true;
-    debug_keyboard=true;
+//    debug_enable=true;
+//    debug_matrix=true;
+//    debug_keyboard=true;
     //debug_mouse=true;
 }
 
